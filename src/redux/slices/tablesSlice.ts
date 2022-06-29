@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 interface Table {
   id: number;
@@ -8,13 +8,41 @@ interface Table {
   bill: number;
 }
 
-export const initialState: Table[] = [];
+interface State {
+  tables: Table[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+
+const initialState: State = {
+  tables: [],
+  status: 'idle',
+  error: null,
+};
+
+export const fetchTablesData = createAsyncThunk('tables/fetchTables', async () => {
+  const response = await fetch('http://localhost:3131/api/tables');
+  return (await response.json()) as Table[];
+});
 
 const tablesSlice = createSlice({
   name: 'tables',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTablesData.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchTablesData.fulfilled, (state, action) => {
+        state.tables = state.tables.concat(...action.payload);
+        state.status = 'succeeded';
+      })
+      .addCase(fetchTablesData.rejected, (state, action) => {
+        state.status = 'failed';
+        console.log(action.error.message);
+      })
+  },
 });
 
-export default tablesSlice.reducer
+export default tablesSlice.reducer;
