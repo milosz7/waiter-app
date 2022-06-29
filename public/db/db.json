@@ -1,0 +1,8 @@
+{
+  "tables": [
+      {"id": 1, "status": "Free", "currentPeopleNumber": 0, "maxPeopleNumber": 4, "bill": 0},
+      {"id": 2, "status": "Busy", "currentPeopleNumber": 2, "maxPeopleNumber": 3, "bill": 30},
+      {"id": 3, "status": "Reserved", "currentPeopleNumber": 0, "maxPeopleNumber": 6, "bill": 0},
+      {"id": 4, "status": "Cleaning", "currentPeopleNumber": 0, "maxPeopleNumber": 2, "bill": 0}
+  ]
+}
