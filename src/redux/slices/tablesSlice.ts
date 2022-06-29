@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface Table {
   id: number;
@@ -44,5 +45,8 @@ const tablesSlice = createSlice({
       })
   },
 });
+
+export const getAllTables = (state: RootState) => state.tablesReducer.tables;
+export const getTablesStatus = (state: RootState) => state.tablesReducer.status;
 
 export default tablesSlice.reducer;
