@@ -1,8 +1,11 @@
-import React from 'react';
+import Home from './components/pages/Home/Home';
+import { Container } from 'react-bootstrap';
 
 function App() {
   return (
-    <h1>Hello World!</h1>
+    <Container>
+      <Home />
+    </Container>
   );
 }
 
