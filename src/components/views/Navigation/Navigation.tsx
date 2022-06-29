@@ -3,9 +3,11 @@ import { NavLink, Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <Navbar bg="primary" expand="lg">
+    <Navbar className="py-2 px-3 rounded d-flex justify-content-between" bg="primary" expand="lg" variant="dark">
       <Navbar.Brand as={Link} to="/">Waiter.app</Navbar.Brand>
-      <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+      <Nav>
+        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+      </Nav>
     </Navbar>
   )
 }
