@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import  tablesReducer  from './slices/tablesSlice';
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    tablesReducer
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;
