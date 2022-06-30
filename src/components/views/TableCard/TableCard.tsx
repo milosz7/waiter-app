@@ -1,4 +1,5 @@
 import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const TableCard = ({ id, status }: { id: number; status: string }) => {
   return (
@@ -10,7 +11,9 @@ const TableCard = ({ id, status }: { id: number; status: string }) => {
           {status}
         </p>
       </div>
-      <Button className="align-self-center" variant="primary">Show more</Button>
+      <LinkContainer to={`/table/${id}`}>
+        <Button className="align-self-center" variant="primary">Show more</Button>
+      </LinkContainer>
     </div>
   );
 };
