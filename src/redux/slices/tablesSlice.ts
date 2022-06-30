@@ -42,11 +42,13 @@ const tablesSlice = createSlice({
       .addCase(fetchTablesData.rejected, (state, action) => {
         state.status = 'failed';
         console.log(action.error.message);
-      })
+      });
   },
 });
 
 export const getAllTables = (state: RootState) => state.tablesReducer.tables;
 export const getTablesStatus = (state: RootState) => state.tablesReducer.status;
+export const getTableById = (state: RootState, id: string | undefined) =>
+  state.tablesReducer.tables.find((table) => table.id.toString() === id);
 
 export default tablesSlice.reducer;
