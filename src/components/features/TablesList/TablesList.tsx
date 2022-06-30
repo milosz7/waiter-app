@@ -6,8 +6,6 @@ import { Spinner } from "react-bootstrap";
 const TablesList = () => {
   const tableData = useAppSelector(getAllTables)
   const tableStatus = useAppSelector(getTablesStatus)
-  
-  if (!tableData.length) return <Spinner animation="border" />
 
   return (
     <div className='d-flex flex-column'>
