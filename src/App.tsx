@@ -2,14 +2,16 @@ import Home from './components/pages/Home/Home';
 import { Container } from 'react-bootstrap';
 import Navigation from './components/views/Navigation/Navigation';
 import { Routes, Route } from 'react-router';
-import { useAppDispatch } from './redux/hooks';
-import { fetchTablesData } from './redux/slices/tablesSlice';
-import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { fetchTablesData, getTablesStatus } from './redux/slices/tablesSlice';
 import Table from './components/pages/Table/Table';
 
 function App() {
   const dispatch = useAppDispatch();
-  useEffect(() => void dispatch(fetchTablesData()), [dispatch]);
+  const tablesStatus = useAppSelector(getTablesStatus);
+  if (tablesStatus === 'idle') {
+    dispatch(fetchTablesData());
+  }
 
   return (
     <Container>
