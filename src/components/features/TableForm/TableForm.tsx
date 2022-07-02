@@ -1,8 +1,8 @@
 import { Form, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import styles from './TableForm.module.scss';
-import { editTablesData } from '../../../redux/slices/tablesSlice';
-import { useAppDispatch } from '../../../redux/hooks';
+import { editTablesData, getTablesStatus } from '../../../redux/slices/tablesSlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 
 interface Data {
@@ -52,10 +52,14 @@ const TableForm = ({ data }: { data: Data }) => {
     setFormData({ ...formData, bill });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(editTablesData(formData));
-    navigate('/');
+    console.log('test');
+    const data = await dispatch(editTablesData(formData))
+    console.log(data)
+    if (data.payload) {
+      navigate('/')
+    }
   };
 
   const { status, currentPeopleNumber, maxPeopleNumber, bill } = formData;

@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { toast } from 'react-toastify';
 
 interface Table {
   id: number;
@@ -37,6 +38,9 @@ export const editTablesData = createAsyncThunk('tables/postTables', async (postD
     }),
   };
   const response = await fetch(`http://localhost:3131/api/tables/${postData.id}`, options);
+  if (!response.ok) {
+    throw new Error();
+  }
   return (await response.json()) as Table;
 });
 
@@ -55,7 +59,16 @@ const tablesSlice = createSlice({
       })
       .addCase(fetchTablesData.rejected, (state, action) => {
         state.status = 'failed';
-        console.log(action.error.message);
+        toast.error(action.error.message, {
+          position: 'top-center',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+        })
+      })
+      .addCase(editTablesData.pending, state => {
+        state.status = 'loading';
       })
       .addCase(editTablesData.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -65,7 +78,13 @@ const tablesSlice = createSlice({
       })
       .addCase(editTablesData.rejected, (state, action) => {
         state.status = 'failed'
-        console.log(action.error.message);
+        toast.error('Failed to post data', {
+          position: 'top-center',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+        })
       });
   },
 });
