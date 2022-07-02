@@ -11,14 +11,14 @@ const Table = () => {
   const tablesStatus = useAppSelector(getTablesStatus)
   const tableData = useAppSelector(state => getTableById(state, id))
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if(!tableData) {
       navigate('/');
     }
   }, [tableData, navigate])
  
-  if(tablesStatus !== 'succeeded') return (
+  if(tablesStatus === 'loading') return (
     <div className="mt-5 d-flex">
       <Spinner className="m-auto" animation="border" />
     </div>
