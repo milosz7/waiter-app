@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { fetchTablesData, getTablesStatus } from './redux/slices/tablesSlice';
 import Table from './components/pages/Table/Table';
 import Footer from './components/views/Footer/Footer';
+import NotFound from './components/pages/NotFound/NotFound';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -15,11 +16,12 @@ function App() {
   }
 
   return (
-    <Container>
+    <Container className="vh-100 d-flex flex-column">
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/table/:id" element={<Table />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
       <Footer />
     </Container>
