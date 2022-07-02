@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface Table {
@@ -26,6 +26,20 @@ export const fetchTablesData = createAsyncThunk('tables/fetchTables', async () =
   return (await response.json()) as Table[];
 });
 
+export const editTablesData = createAsyncThunk('tables/postTables', async (postData: Table) => {
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...postData,
+    }),
+  };
+  const response = await fetch(`http://localhost:3131/api/tables/${postData.id}`, options);
+  return (await response.json()) as Table;
+});
+
 const tablesSlice = createSlice({
   name: 'tables',
   initialState,
@@ -41,6 +55,16 @@ const tablesSlice = createSlice({
       })
       .addCase(fetchTablesData.rejected, (state, action) => {
         state.status = 'failed';
+        console.log(action.error.message);
+      })
+      .addCase(editTablesData.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.tables = state.tables.map((table) => 
+          table.id === action.payload.id ? action.payload : table
+        )
+      })
+      .addCase(editTablesData.rejected, (state, action) => {
+        state.status = 'failed'
         console.log(action.error.message);
       });
   },
