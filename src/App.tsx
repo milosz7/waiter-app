@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { fetchTablesData, getTablesStatus } from './redux/slices/tablesSlice';
 import Table from './components/pages/Table/Table';
+import Footer from './components/views/Footer/Footer';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/table/:id" element={<Table />}></Route>
       </Routes>
+      <Footer />
     </Container>
   );
 }
