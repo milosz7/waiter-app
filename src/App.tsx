@@ -7,6 +7,8 @@ import { fetchTablesData, getTablesStatus } from './redux/slices/tablesSlice';
 import Table from './components/pages/Table/Table';
 import Footer from './components/views/Footer/Footer';
 import NotFound from './components/pages/NotFound/NotFound';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -17,6 +19,7 @@ function App() {
 
   return (
     <Container className="vh-100 d-flex flex-column">
+      <ToastContainer />
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />}></Route>
