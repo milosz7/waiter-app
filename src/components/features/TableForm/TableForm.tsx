@@ -1,8 +1,8 @@
 import { Form, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import styles from './TableForm.module.scss';
-import { editTablesData, getTablesStatus } from '../../../redux/slices/tablesSlice';
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { editTablesData } from '../../../redux/slices/tablesSlice';
+import { useAppDispatch } from '../../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 
 interface Data {
@@ -18,7 +18,7 @@ const TableForm = ({ data }: { data: Data }) => {
   const [formData, setFormData] = useState(data);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  
+
   const changeMin = (value: string) => {
     const newValue = parseInt(value) ? parseInt(value) : 0;
     if (newValue > formData.maxPeopleNumber && newValue <= 10) {
@@ -54,18 +54,16 @@ const TableForm = ({ data }: { data: Data }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('test');
-    const data = await dispatch(editTablesData(formData))
-    console.log(data)
+    const data = await dispatch(editTablesData(formData));
     if (data.payload) {
-      navigate('/')
+      navigate('/');
     }
   };
 
   const { status, currentPeopleNumber, maxPeopleNumber, bill } = formData;
 
   return (
-    <Form onSubmit={e => handleSubmit(e)} className="col-12 col-sm-6 col-lg-4 mt-3">
+    <Form onSubmit={(e) => handleSubmit(e)} className="col-12 col-sm-6 col-lg-4 mt-3">
       <Form.Group className="mb-3">
         <Form.Label className="fw-bold mb-2">Status:</Form.Label>
         <Form.Select value={status} onChange={(e) => changeSelect(e.target.value)}>
