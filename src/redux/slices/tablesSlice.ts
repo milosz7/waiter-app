@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { toast } from 'react-toastify';
+import { API_URL } from '../../config';
 
 interface Table {
   id: number;
@@ -23,7 +24,7 @@ const initialState: State = {
 };
 
 export const fetchTablesData = createAsyncThunk('tables/fetchTables', async () => {
-  const response = await fetch('http://localhost:3131/api/tables');
+  const response = await fetch(`${API_URL}/tables`);
   return (await response.json()) as Table[];
 });
 
@@ -37,7 +38,7 @@ export const editTablesData = createAsyncThunk('tables/postTables', async (postD
       ...postData,
     }),
   };
-  const response = await fetch(`http://localhost:3131/api/tables/${postData.id}`, options);
+  const response = await fetch(`${API_URL}/tables/${postData.id}`, options);
   if (!response.ok) {
     throw new Error();
   }
