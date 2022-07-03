@@ -13,5 +13,3 @@ server.use(jsonServer.rewriter({
 
 server.use(router);
 server.listen(port);
-
-export {}
